@@ -23,7 +23,7 @@ class ObtainAuthToken(APIView):
 
 
 class HelloView(APIView):
-    permission_classes = (IsAuthenticated,)  # <-- And here
+    permission_classes = (IsAuthenticated,)             # <-- And here
 
     def get(self, request):
         content = {'message': 'Hello, World!'}
