@@ -118,5 +118,3 @@ class CheckItem(models.Model):
     check_number = models.IntegerField()
     doctor = models.ForeignKey(User, null=True, related_name="check_doctor", on_delete=models.CASCADE)
     check_report = models.ForeignKey(CheckReport, null=True, on_delete=models.CASCADE)
-
-

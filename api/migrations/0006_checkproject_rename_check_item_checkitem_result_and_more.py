@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('api', '0005_checkitem_region_remove_checkreport_title_and_more'),
     ]
@@ -54,12 +53,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='checkitem',
             name='user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='check_user', to='api.user'),
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='check_user',
+                                    to='api.user'),
         ),
         migrations.AlterField(
             model_name='checkitem',
             name='doctor',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='check_doctor', to='api.user'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='check_doctor',
+                                    to='api.user'),
         ),
         migrations.DeleteModel(
             name='CheckReport',
