@@ -7,7 +7,7 @@ from api.utils import add_time_interval
 import requests
 
 
-def test_add_time_inteval():
+def test_add_time_interval():
     time = datetime(2022, 3, 1, 8, 30)
     assert add_time_interval(time) == datetime(2022, 3, 1, 8, 45)
 
