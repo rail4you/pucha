@@ -24,26 +24,24 @@ import api.models
 
 
 class UserManager(BaseUserManager):  # 自定义Manager管理器
-    def _create_user(self, username, id_card, phone, **kwargs):
-        if not username:
-            raise ValueError("请传入用户名！")
+    def _create_user(self, id_card, password, **kwargs):
         if not id_card:
             raise ValueError("请传入id card！")
-        if not phone:
+        if not password:
             raise ValueError("请传入电话")
-        user = self.model(username=username, id_card=id_card, phone=phone, **kwargs)
-        # user.set_password(password)
+        user = self.model(id_card=id_card, password=password, **kwargs)
+        user.set_password(password)
         user.save()
         return user
 
-    def create_user(self, username, password, email, **kwargs):  # 创建普通用户
+    def create_user(self, id_card, password, **kwargs):  # 创建普通用户
         kwargs['is_superuser'] = False
-        return self._create_user(username, password, email, **kwargs)
+        return self._create_user(id_card, password, **kwargs)
 
-    def create_superuser(self, username, password, email, **kwargs):  # 创建超级用户
+    def create_superuser(self, id_card, password, **kwargs):  # 创建超级用户
         kwargs['is_superuser'] = True
         kwargs['is_staff'] = True
-        return self._create_user(username, password, email, **kwargs)
+        return self._create_user(id_card, password, **kwargs)
 
 
 class Region(models.Model):
@@ -92,21 +90,33 @@ class User(AbstractUser):  # 自定义User
         verbose_name_plural = verbose_name
 
 
-class CheckItem(models.Model):
+class CheckProject(models.Model):
     name = models.CharField(max_length=20)
     department_name = models.TextField()
     department_position = models.TextField()
     check_agent = models.TextField()
     check_item = models.TextField(null=True)
     announcement = models.TextField()
-    doctor = models.ForeignKey(User, on_delete=models.CASCADE)
-    check_time = models.DateTimeField(null=True)
-    check_number = models.IntegerField()
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    contact = models.ForeignKey(User, on_delete=models.CASCADE)
+    credit = models.IntegerField(null=True)
 
     def __str__(self):
         return self.name
 
 
 class CheckReport(models.Model):
-    check_item = models.ForeignKey(CheckItem, null=True, on_delete=models.SET_NULL)
+    name = models.CharField(max_length=50)
     result = models.TextField()
+
+
+class CheckItem(models.Model):
+    user = models.ForeignKey(User, null=True, related_name="check_user", on_delete=models.CASCADE)
+    check_project = models.ForeignKey(CheckProject, null=True, on_delete=models.CASCADE)
+    check_time = models.DateTimeField(null=True)
+    check_number = models.IntegerField()
+    doctor = models.ForeignKey(User, null=True, related_name="check_doctor", on_delete=models.CASCADE)
+    check_report = models.ForeignKey(CheckReport, null=True, on_delete=models.CASCADE)
+
+
