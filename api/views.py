@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from rest_framework.permissions import IsAuthenticated
@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # obtain_auth_token = ObtainAuthToken.as_view()
-from api.models import User
+from api.models import User, Region
 
 
 class ObtainAuthToken(APIView):
@@ -28,3 +28,24 @@ class HelloView(APIView):
     def get(self, request):
         content = {'message': 'Hello, World!'}
         return Response(content)
+
+
+class CheckCodeView(APIView):
+    permission_classes = ()
+
+    def get(self, request):
+        code = request.GET.get("code")
+        region = Region.objects.filter(code=code).first()
+        if region is None:
+            return Response("no region")
+        else:
+            return Response(region.id)
+
+
+class RegionDetailView(APIView):
+    permission_classes = ()
+
+    def get(self, request, pk):
+        region = get_object_or_404(Region, pk=pk)
+        dic = {"name": region.name, "count": region.count}
+        return Response(dic)

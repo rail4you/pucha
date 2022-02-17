@@ -19,8 +19,9 @@ from datetime import date
 #         return "{}".format(self.email)
 from django.contrib.auth.models import BaseUserManager, AbstractUser
 
-
 # from shortsighted import ShortUUIDField # 使用shortuuid作为User表的主键，使数据更加的安全
+import api.models
+
 
 class UserManager(BaseUserManager):  # 自定义Manager管理器
     def _create_user(self, username, id_card, phone, **kwargs):
@@ -45,6 +46,15 @@ class UserManager(BaseUserManager):  # 自定义Manager管理器
         return self._create_user(username, password, email, **kwargs)
 
 
+class Region(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=10)
+    count = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
 class User(AbstractUser):  # 自定义User
     GENDER_TYPE = (
         ("1", "男"),
@@ -59,6 +69,7 @@ class User(AbstractUser):  # 自定义User
     email = models.EmailField(verbose_name="邮箱")
     # picture = models.ImageField(upload_to="Store/user_picture",verbose_name="用户头像",null=True,blank=True)
     home_address = models.CharField(max_length=100, null=True, blank=True, verbose_name="地址")
+    region = models.ForeignKey(Region, verbose_name="region", null=True, on_delete=models.SET_NULL)
     card_id = models.CharField(max_length=30, verbose_name="身份证", unique=True)
     is_active = models.BooleanField(default=True, verbose_name="激活状态")
     is_staff = models.BooleanField(default=True, verbose_name="是否是员工")
@@ -79,3 +90,23 @@ class User(AbstractUser):  # 自定义User
     class Meta:
         verbose_name = "用户"
         verbose_name_plural = verbose_name
+
+
+class CheckItem(models.Model):
+    name = models.CharField(max_length=20)
+    department_name = models.TextField()
+    department_position = models.TextField()
+    check_agent = models.TextField()
+    check_item = models.TextField(null=True)
+    announcement = models.TextField()
+    doctor = models.ForeignKey(User, on_delete=models.CASCADE)
+    check_time = models.DateTimeField(null=True)
+    check_number = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+class CheckReport(models.Model):
+    check_item = models.ForeignKey(CheckItem, null=True, on_delete=models.SET_NULL)
+    result = models.TextField()
