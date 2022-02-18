@@ -1,12 +1,4 @@
-from django.db import models
-
 # Create your models here.
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-# from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
-from datetime import date
-
 # class User(AbstractUser):
 #     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
 #     email = models.EmailField('email', unique=True)
@@ -17,10 +9,13 @@ from datetime import date
 #
 #     def __str__(self):
 #         return "{}".format(self.email)
-from django.contrib.auth.models import BaseUserManager, AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db import models
+
+
+# from django.utils.translation import ugettext_lazy as _
 
 # from shortsighted import ShortUUIDField # 使用shortuuid作为User表的主键，使数据更加的安全
-import api.models
 
 
 class UserManager(BaseUserManager):  # 自定义Manager管理器

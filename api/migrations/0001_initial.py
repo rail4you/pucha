@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                                                             to='auth.Permission', verbose_name='user permissions')),
             ],
             options={
-                'verbose_name': '用户',
+                'verbose_name'       : '用户',
                 'verbose_name_plural': '用户',
             },
         ),
