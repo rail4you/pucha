@@ -131,10 +131,9 @@ class CheckItem(models.Model):
 class TimeSheet(models.Model):
     check_project = models.ForeignKey(CheckProject, on_delete=models.CASCADE)
     time = models.DateField()
-    is_holiday=models.BooleanField(default=False)
+    is_holiday = models.BooleanField(default=False)
     am = models.IntegerField(default=20)
     pm = models.IntegerField(default=20)
-
 
     def __str__(self):
         return self.time.day
@@ -142,4 +141,3 @@ class TimeSheet(models.Model):
     class Meta:
         verbose_name = "时间表"
         verbose_name_plural = "时间表"
-
