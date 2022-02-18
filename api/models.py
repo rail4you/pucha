@@ -91,7 +91,7 @@ class User(AbstractUser):  # 自定义User
 
 
 class CheckProject(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, verbose_name="名称")
     department_name = models.TextField()
     department_position = models.TextField()
     check_agent = models.TextField()
@@ -105,10 +105,18 @@ class CheckProject(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "检查项目"
+        verbose_name_plural = "检查项目"
+
 
 class CheckReport(models.Model):
     name = models.CharField(max_length=50)
     result = models.TextField()
+
+    class Meta:
+        verbose_name = "检查报告"
+        verbose_name_plural = "检查报告"
 
 
 class CheckItem(models.Model):
@@ -119,4 +127,19 @@ class CheckItem(models.Model):
     doctor = models.ForeignKey(User, null=True, related_name="check_doctor", on_delete=models.CASCADE)
     check_report = models.ForeignKey(CheckReport, null=True, on_delete=models.CASCADE)
 
+
+class TimeSheet(models.Model):
+    check_project = models.ForeignKey(CheckProject, on_delete=models.CASCADE)
+    time = models.DateField()
+    is_holiday=models.BooleanField(default=False)
+    am = models.IntegerField(default=20)
+    pm = models.IntegerField(default=20)
+
+
+    def __str__(self):
+        return self.time.day
+
+    class Meta:
+        verbose_name = "时间表"
+        verbose_name_plural = "时间表"
 
