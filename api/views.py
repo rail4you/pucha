@@ -69,6 +69,4 @@ def add_check_item(user, check_project_id):
                                         check_time=add_time_interval(last_checkitem.check_time),
                                         check_number=last_checkitem.check_number + 1)
 
-
-
     # assert_equal(add_time_interval(time), datetime.datetime(2022, 3, 1, 8, 30))

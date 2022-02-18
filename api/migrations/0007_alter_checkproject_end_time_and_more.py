@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('api', '0006_checkproject_rename_check_item_checkitem_result_and_more'),
     ]
