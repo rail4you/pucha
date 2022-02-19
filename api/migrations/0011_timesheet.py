@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('api', '0010_remove_user_region_alter_user_card_id_and_more'),
     ]
