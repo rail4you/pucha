@@ -18,7 +18,8 @@ from django.urls import include, path
 
 # from rest_framework.authtoken.views import obtain_auth_token
 from api.views import ObtainAuthToken
-
+admin.site.site_header = '健康普查系统'
+admin.site.site_title = '健康普查系统'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include("api.urls")),
