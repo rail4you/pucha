@@ -101,7 +101,7 @@ class CheckItemListView(APIView):
     # permission_classes = [IsAuthenticated]
     def get(self, request):
         # user info
-        user = request.user
+        doctor = request.user
         page = int(request.GET.get("page", 1))
         page_size = int(request.GET.get("page_size", 25))
         print(page)
@@ -117,7 +117,7 @@ class CheckItemListView(APIView):
         left_credit = check_project.left_credit
 
         # count
-        check_items = CheckItem.objects.filter(doctor=user)
+        check_items = CheckItem.objects.filter(doctor=doctor)
         finish_items = check_items.exclude(status="Waiting")
         unfinish_items = check_items.filter(status="Waiting")
         all_item_count = check_items.count()
