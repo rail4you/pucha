@@ -115,6 +115,7 @@ class CheckProject(models.Model):
     end_time = models.DateTimeField(verbose_name="结束时间")
     contact = models.ForeignKey(User, verbose_name="联系人", on_delete=models.CASCADE)
     credit = models.IntegerField(verbose_name="预算案例", null=True)
+    left_credit = models.IntegerField(verbose_name='剩余份额', null=True)
 
     def __str__(self):
         return self.name
@@ -137,14 +138,14 @@ class CheckReport(models.Model):
     status = models.CharField(max_length=50, choices=CheckReportChoices, default="Unfinished", verbose_name='状态')
     main = models.TextField(null=True, blank=True, verbose_name="主诉")
     disease_history = models.TextField(null=True, blank=True, verbose_name="病史")
-    drug_history= models.TextField(null=True, blank=True, verbose_name="药物过敏史")
+    drug_history = models.TextField(null=True, blank=True, verbose_name="药物过敏史")
     body_check = models.TextField(null=True, blank=True, verbose_name="体格检查")
     diagnose = models.TextField(null=True, blank=True, verbose_name="初步诊断")
     treatment = models.TextField(null=True, blank=True, verbose_name="处置")
 
-    # def __str__(self):
-    #     return self.checkitem.first().user.username
-        # return self.name
+    def __str__(self):
+        # return self.checkitem.first().user.username
+        return self.name
 
     class Meta:
         verbose_name = "检查报告"
@@ -170,20 +171,21 @@ class CheckItem(models.Model):
     doctor = models.ForeignKey(User, null=True, related_name="check_doctor", on_delete=models.CASCADE,
                                verbose_name="检查医生")
     status = models.CharField(max_length=100, choices=Text_Choice, default="Waiting", verbose_name='状态')
-    check_report = models.ForeignKey(CheckReport, related_name="checkitem", null=True, blank=True, on_delete=models.CASCADE,
-                                     verbose_name="检查报告")
+    check_report = models.OneToOneField(CheckReport, related_name="checkitem", null=True, blank=True,
+                                        on_delete=models.CASCADE,
+                                        verbose_name="检查报告")
 
     def __str__(self):
         return str(self.check_number)
 
     class Meta:
-        verbose_name = "检查项目"
-        verbose_name_plural = "检查项目"
+        verbose_name = "门诊预约单"
+        verbose_name_plural = "门诊预约单"
 
 
 class TimeSheet(models.Model):
     check_project = models.ForeignKey(CheckProject, on_delete=models.CASCADE,
-                                      verbose_name="检查项目")
+                                      verbose_name="门诊预约单")
     time = models.DateField(verbose_name="日期")
     is_holiday = models.BooleanField(default=False, verbose_name="是否是节假日")
     am = models.PositiveIntegerField(default=20, verbose_name="上午访问人数")
@@ -196,3 +198,17 @@ class TimeSheet(models.Model):
         ordering = ['time', 'am']
         verbose_name = "时间表"
         verbose_name_plural = "时间表"
+
+
+class Disease(models.Model):
+    group = models.TextField()
+    name = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '疾病'
+        verbose_name_plural = '疾病'
+
+
