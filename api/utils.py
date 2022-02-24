@@ -27,9 +27,9 @@ def first_available_date(time):
         return "None"
     timesheet = result.first()
     if timesheet.am > 0:
-        return (timesheet.time, "am")
+        return timesheet.time, "am"
     else:
-        return (timesheet.time, "pm")
+        return timesheet.time, "pm"
 
 
 def create_time_sheet(check_project_id):
