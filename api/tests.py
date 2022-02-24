@@ -2,10 +2,9 @@
 
 # Create your tests here.
 from datetime import datetime
-import pytest
+
 from api.utils import add_time_interval
 from api.utils import last_available_date
-import requests
 
 
 def test_add_time_inteval():
@@ -15,6 +14,7 @@ def test_add_time_inteval():
 
 def test_hello_api():
     pass
+
 
 def test_date():
     assert last_available_date(datetime.today()) == "2022-2-20"

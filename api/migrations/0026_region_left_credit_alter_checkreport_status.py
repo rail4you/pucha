@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('api', '0025_remove_checkreport_result_checkreport_body_check_and_more'),
     ]
@@ -18,6 +17,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='checkreport',
             name='status',
-            field=models.CharField(choices=[('Finished', '报告已完成'), ('Unfinished', '报告未填写')], default='Unfinished', max_length=50, verbose_name='状态'),
+            field=models.CharField(choices=[('Finished', '报告已完成'), ('Unfinished', '报告未填写')], default='Unfinished',
+                                   max_length=50, verbose_name='状态'),
         ),
     ]

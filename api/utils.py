@@ -44,11 +44,12 @@ def create_time_sheet(check_project_id):
 
 def select_item(timesheet):
     result = []
-    if timesheet.am > 0 :
-        result.append({"date":timesheet.time, "time_part":"am"})
-    if timesheet.pm >0:
-        result.append({"date":timesheet.time, "time_part":"am"})
+    if timesheet.am > 0:
+        result.append({"date": timesheet.time, "time_part": "am"})
+    if timesheet.pm > 0:
+        result.append({"date": timesheet.time, "time_part": "am"})
     return result
+
 
 def create_available_date_range(time):
     result = TimeSheet.objects.filter(Q(is_holiday=False), Q(time__gte=time), Q(am__gt=0) | Q(pm__gt=0))
@@ -104,4 +105,6 @@ def get_paginated_list(items, page, limit):
 
     obj['items'] = items[start:end]
     return obj
+
+
 create_available_date_range(datetime.today())

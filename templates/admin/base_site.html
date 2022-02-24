@@ -1,11 +1,12 @@
 {% extends "admin/base.html" %}
- 
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
- 
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} |
+    {{ site_title|default:_('Django site admin') }}{% endblock %}
+
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">广州市黄浦区妇幼保健院</a></h1>
-    <br />
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">广州市黄浦区妇幼保健院</a></h1>
+    <br/>
     <h2>当前活动为{{ project_title }}, 总份额是{{ credit }}，剩余份额是 {{ left_credit }}</h2>
 {% endblock %}
- 
+
 {% block nav-global %}{% endblock %}

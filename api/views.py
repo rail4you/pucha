@@ -1,6 +1,3 @@
-import json
-from datetime import datetime
-
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -30,6 +27,7 @@ class ObtainAuthToken(APIView):
 class LoginView(APIView):
     authentication_classes = []
     permission_classes = []
+
     def post(self, request):
         phone = request.POST.get("phone")
         password = request.POST.get("password")
@@ -39,6 +37,7 @@ class LoginView(APIView):
             return Response({"token": token.key})
         else:
             return Response("login failed")
+
 
 class HelloView(APIView):
     permission_classes = (IsAuthenticated,)  # <-- And here

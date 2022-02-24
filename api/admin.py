@@ -1,17 +1,12 @@
-from urllib.parse import urlencode
-
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 # from .models import User
-from django.forms import forms
 from django.urls import reverse
 from django.utils.html import format_html
-
-from api.models import User, CheckProject, CheckReport, CheckItem, Region, Disease
-from api.models import TimeSheet
-
-import nested_admin
 from django_reverse_admin import ReverseModelAdmin
+
+from api.models import TimeSheet
+from api.models import User, CheckProject, CheckReport, CheckItem, Region, Disease
+
 
 @admin.register(CheckProject)
 class CheckProjectAdmin(admin.ModelAdmin):
@@ -31,28 +26,26 @@ class RegionAdmin(admin.ModelAdmin):
 #     model = User
 
 
-
 # @admin.register(User)
 # class UserAdmin(admin.ModelAdmin):
-    # list_display = ('username', 'phone')
-    # inlines = [CheckItemInline]
+# list_display = ('username', 'phone')
+# inlines = [CheckItemInline]
 
 #
 #
 # classs CheckItemForm(forms.Mo)
 
 
-
 # @admin.register(CheckItem)
 class CheckItemAdmin(ReverseModelAdmin):
     list_display = ("user", "check_number", "user_sex", "user_age", "check_date", "status", "check_report_link")
     # list_display_links = None
-    readonly_fields = ('user', 'check_report' )
+    readonly_fields = ('user', 'check_report')
     fields = ('user',)
     # inlines = (UserInline, )
     inline_type = 'stacked'
-    inline_reverse = [('user', {'fields':['username', 'age', 'phone']}),
-                      ('check_project',{'fields':['name', 'left_credit']}),
+    inline_reverse = [('user', {'fields': ['username', 'age', 'phone']}),
+                      ('check_project', {'fields': ['name', 'left_credit']}),
                       'check_report',
                       ]
 

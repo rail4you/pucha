@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('api', '0020_alter_timesheet_am_alter_timesheet_pm_and_more'),
     ]
